@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Do not remove this test for UTF-8: if “Ω” doesn’t appear as greek uppercase omega letter enclosed in quotation marks, you should use an editor that supports UTF-8, not this one. -->
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>wsl-ubuntu-2204</id>
+    <version>22.4.0.20220620</version>
+    <title>Ubuntu 22.04 LTS for WSL</title>
+    <authors>Canonical Ltd.</authors>
+    <owners>Simon Tremblay</owners>
+    <projectUrl>https://ubuntu.com/wsl</projectUrl>
+    <docsUrl>https://docs.microsoft.com/en-us/windows/wsl/about</docsUrl>
+    <bugTrackerUrl>https://github.com/Microsoft/WSL/issues</bugTrackerUrl>
+    <iconUrl>https://cdn.jsdelivr.net/gh/tremblaysimon/chocolatey-packages@master/wsl-ubuntu-2204/ubuntu_orange_hex.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description><![CDATA[*"Ubuntu 22.04 LTS on Windows allows you to use Ubuntu Terminal and run Ubuntu command line utilities including bash, ssh, git, apt and many more."* - <https://www.microsoft.com/en-us/p/ubuntu-2204-lts/9PN20MSR04DW>
+
+## Package parameters
+
+- `/InstallRoot:true` - whether to set the default user as `root`. Defaults to `false`
+
+Example: `choco install wsl-ubuntu-2204 --params "/InstallRoot:true"`
+
+## Note
+
+- This package checks to see if WSL is installed before downloading the distro archive file. If this check fails, the install will fail.
+- **Important:** Install [wsl](https://chocolatey.org/packages/wsl) or [wsl2](https://chocolatey.org/packages/wsl2) then restart before attempting to install this package. A dependency was not declared since installing this package on a system where WSL wasn't installed before will always fail since WSL requires a restart before it can be used.
+]]></description>
+    <summary>Ubuntu 22.04</summary>
+    <releaseNotes></releaseNotes>
+    <copyright>© Canonical Ltd.</copyright>
+    <tags>wsl wsl2 ubuntu linux focalfossa</tags>
+    <packageSourceUrl>https://github.com/tremblaysimon/chocolatey-packages/tree/master/wsl-ubuntu-2204</packageSourceUrl>
+  </metadata>
+  <files>
+    <file src="tools\**" target="tools" />
+  </files>
+</package>

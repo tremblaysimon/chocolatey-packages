@@ -28,7 +28,7 @@ Example: `choco install wsl-ubuntu-2204 --params "/InstallRoot:true"`
     <summary>Ubuntu 22.04</summary>
     <releaseNotes></releaseNotes>
     <copyright>© Canonical Ltd.</copyright>
-    <tags>wsl wsl2 ubuntu linux focalfossa</tags>
+    <tags>wsl wsl2 ubuntu linux jammy</tags>
     <packageSourceUrl>https://github.com/tremblaysimon/chocolatey-packages/tree/master/wsl-ubuntu-2204</packageSourceUrl>
   </metadata>
   <files>

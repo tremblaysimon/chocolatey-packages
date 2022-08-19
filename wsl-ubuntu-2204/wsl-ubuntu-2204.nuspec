@@ -3,7 +3,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>wsl-ubuntu-2204</id>
-    <version>22.4.0.20220620</version>
+    <version>22.4.0.20220819</version>
     <title>Ubuntu 22.04 LTS for WSL</title>
     <authors>Canonical Ltd.</authors>
     <owners>Simon Tremblay</owners>
@@ -16,9 +16,9 @@
 
 ## Package parameters
 
-- `/InstallRoot:true` - whether to set the default user as `root`. Defaults to `false`
+- `/AutomaticInstall:true` - whether to install Ubuntu distro automatically with a default WSL name and username. Defaults to `false`
 
-Example: `choco install wsl-ubuntu-2204 --params "/InstallRoot:true"`
+Example: `choco install wsl-ubuntu-2204 --params "/AutomaticInstall:true"`
 
 ## Note
 

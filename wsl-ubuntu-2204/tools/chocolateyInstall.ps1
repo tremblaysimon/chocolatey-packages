@@ -1,9 +1,11 @@
 ﻿$ErrorActionPreference = 'Stop'
 
-$installRoot = $false
+$automaticInstall = $false
 
-$pp = Get-PackageParameters
-if ([bool]$pp.InstallRoot -eq $true) { $installRoot = $pp.InstallRoot }
+$packageParameters = Get-PackageParameters
+if ([bool]$packageParameters.AutomaticInstall -eq $true) { 
+    $automaticInstall = $packageParameters.AutomaticInstall 
+}
 
 $packageArgs = @{
     packageName    = 'wsl-ubuntu-2204'
@@ -27,14 +29,40 @@ if (!$wslIntalled) {
 
 Get-ChocolateyWebFile @packageArgs
 
-Add-AppxPackage $packageArgs.fileFullPath
+if ($automaticInstall) {
+    $wslName = 'devbox'
+    $wslInstallationPath = "$env:USERPROFILE\WSL2\$wslName"
+    $wslUsername = $env:USERNAME.ToLower().Replace(' ', '')
 
-if ($installRoot) {
-    if (Get-Command ubuntu2204.exe -ErrorAction SilentlyContinue) {
-        & ubuntu2204.exe install --root
+    # create staging directory if it does not exists
+    if (-Not (Test-Path -Path $env:TEMP\staging)) { $dir = mkdir $env:TEMP\staging }
+
+    Move-Item $env:TEMP\ubuntu2204.appx $env:TEMP\staging\$wslName-Temp.zip
+
+    Expand-Archive $env:TEMP\staging\$wslName-Temp.zip $env:TEMP\staging\$wslName-Temp
+
+    Move-Item $env:TEMP\staging\$wslName-Temp\Ubuntu_2204.0.10.0_x64.appx $env:TEMP\staging\$wslName.zip
+
+    Expand-Archive $env:TEMP\staging\$wslName.zip $env:TEMP\staging\$wslName
+
+    if (-Not (Test-Path -Path $wslInstallationPath)) {
+        mkdir $wslInstallationPath
     }
-    else {
-        & ubuntu.exe install --root
-    }
-    & wsl.exe --list --verbose
+    wsl --import $wslName $wslInstallationPath $env:TEMP\staging\$wslName\install.tar.gz
+
+    Move-Item $env:TEMP\staging\$wslName-Temp.zip $env:TEMP\ubuntu2204.appx 
+    Remove-Item -r $env:TEMP\staging\
+
+
+    $chocolateyInstallFolder = $env:ChocolateyInstall.Replace('\', '/')
+    $chocolateyInstallFolder = $chocolateyInstallFolder.Replace("C:", "/mnt/c")
+
+    # create your user and add it to sudoers
+    wsl -d $wslName -u root bash -ic "$chocolateyInstallFolder/lib/wsl-ubuntu-2204/tools/scripts/createUser.sh $wslUsername ubuntu"
+
+    # ensure WSL Distro is restarted when first used with user account
+    wsl -t $wslName
+}
+else {
+    Add-AppxPackage $packageArgs.fileFullPath
 }

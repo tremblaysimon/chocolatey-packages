@@ -10,7 +10,7 @@ if ([bool]$packageParameters.AutomaticInstall -eq $true) {
 $packageArgs = @{
     packageName    = 'wsl-ubuntu-2204'
     softwareName   = 'Ubuntu 22.04 LTS for WSL'
-    checksum       = 'c5028547edfe72be8f7d44ef52cee5aacaf9b1ae1ed4f7e39b94dae3cf286bc2'
+    checksum       = '6ad6d88763451a50f98f2469ce80464d666204c08d07f8f6a89e0d5ca05b097a'
     checksumType   = 'sha256'
     url            = 'https://aka.ms/wslubuntu2204'
     fileFullPath   = "$env:TEMP\ubuntu2204.appx"
